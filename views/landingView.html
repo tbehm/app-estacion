@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+
+	<style>
+
+		:root{
+			--bg-color: #38a3a5;
+			--bg-color-header: #c7f9cc;
+			--bg-color-container: #80ed99;
+		}
+		
+		*{
+			padding: 0rem;
+			margin: 0rem;
+			font-family: sans-serif;
+			box-sizing: border-box;
+		}
+
+		body{
+			background-color: var(--bg-color);
+		}
+
+		#header{
+			background-color: var(--bg-color-header);
+		}
+
+		#container{
+			/*! background-color: var(--bg-color-container); */
+			margin-top: 5rem;
+			/*! width: 600px; */
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+
+		#container_data {
+		  width: 600px;
+		  background-color: var(--bg-color-container);
+		  display: flex;
+		  padding: 2rem;
+		}
+			
+			
+
+		#container_data {
+		  width: 600px;
+		  background-color: var(--bg-color-container);
+		}
+			
+			
+		img {
+		  width: 300px;
+		}
+	</style>
+
+</head>
+<body>
+
+	<!-- Envoltura de todo el contenido -->
+	<div id="wrapper">
+
+		<!-- Encabezado -->
+		<div id="header">
+			
+			<!-- Seccion para colocar el logo -->
+			<div id="hero"></div>
+
+			<!-- Sección para colocar los botones de login / register / cerrar sesión / menú -->
+			<div id="control">
+				
+				<a href="?slug=login">Login</a>
+				<a href="?slug=register">Register</a>
+
+			</div>
+
+		</div>
+		<!-- Fin encabezado -->
+		
+		<!-- Contenedor de datos (cuerpo) -->
+		<div id="container">
+
+			<!-- mini ventana que se centra en el cuerpo -->
+			<div id="container_data">
+				
+				<!-- sección izquierda para la imagen -->
+				<div id="imagen">	
+					<img src="img/landing.svg" alt="">
+				</div>
+			
+				<!-- Seccion derecha para la explicación -->
+				<div id="description">
+					<h1>Bienvenido a los apuntes X</h1>
+					<h2>Ya somos {{CANT_USUARIOS}} usuarios compartiendo {{CANT_APUNTES}} apuntes</h2>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</body>
+</html>
