@@ -4,7 +4,7 @@
 	$vars = ["MSG_ERROR_FORM" => ""];
 
 	// Se presiono el boton de ingresar
-	if(isset($_POST['btn_ingresar'])){
+	if(isset($_POST['btn_registrar'])){
 
 		// Instancio la clase User
 		$usuario = new User();
@@ -13,23 +13,23 @@
 		$formulario = $_POST;
 
 		// le quitamos al formulario el boton
-		unset($formulario["btn_ingresar"]);
+		unset($formulario["btn_registrar"]);
 
-		// intentamos loguear al usuario
-		$response = $usuario->login($formulario);
+		// intentamos registrarnos al usuario
+		$response = $usuario->register($formulario);
 
-		// logueo valido
+		// registro valido
 		if($response["errno"]==200){
 			// redirecciona al panel
-			header("Location: ?slug=panel");
+			header("Location: ?slug=login");
 		}
 
-		// en caso de que contraseña o usuario invalido
+		// en caso de que el correo ya este registrado
 		$vars = ["MSG_ERROR_FORM" => $response["error"]];
 	}
 	
 	// instanciamos el objeto tini y cargamos la vista login
-	$tpl = new Tini("login");
+	$tpl = new Tini("register");
 
 	// reemplazamos las variables en la plantilla
 	$tpl->setVars($vars);

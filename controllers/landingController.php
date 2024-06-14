@@ -1,21 +1,22 @@
 <?php 
 
 	// Incluimos los modelos especificos para obtener datos
-	include_once 'models/Users.php';
 	include_once 'models/Notes.php';
 
-	// Carga la vista
-	$tpl = loadTPL("landing");
+	// crea el objeto de usuario
+	$usuario = new User();
+
+	// carga la vista
+	$tpl = new Tini("landing");
 
 	// Variables a reemplazar en la vista
-	$vars = ["CANT_USUARIOS" => getCantUsers(), 
+	$vars = ["CANT_USUARIOS" => $usuario->getCantUser(), 
 				"CANT_APUNTES" => getCantNotes()];
 
+	// reemplaza variables en la vista
+	$tpl->setVars($vars);
 
-	// reemplazamos las variables en la vista
-	$tpl = setVarsTPL($vars ,$tpl);
-	
-	// imprime la vista
- 	printTPL($tpl);
+	// imprime la vista en la página
+	$tpl->print();
 
  ?>

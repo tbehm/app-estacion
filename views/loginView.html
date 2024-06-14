@@ -4,19 +4,65 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
+
+	<link rel="stylesheet" type="text/css" href="views/static/css/styles.css">
+
 </head>
 <body>
-	
-	<h1>Iniciar sesión</h1>
 
+	<!-- Envoltura de todo el contenido -->
+	<div id="wrapper">
 
-	<form action="">
+		<!-- Encabezado -->
+		<div id="header">
+			
+			<!-- Seccion para colocar el logo -->
+			<div id="hero">
+				<a href="?slug=landing">
+					<img src="img/system/hero.png" alt="">
+				</a>
+			</div>
+
+			<!-- Sección para colocar los botones de login / register / cerrar sesión / menú -->
+			<div id="control">
+			
+				<a href="?slug=register" class="btn_register">Register</a>
+
+			</div>
+
+		</div>
+		<!-- Fin encabezado -->
 		
-		<input type="text" placeholder="email">
-		<input type="text" placeholder="password">
-		<input type="submit" name="btn_ingresar" value="ingresar">
+		<!-- Contenedor de datos (cuerpo) -->
+		<div id="container">
 
-	</form>
+			<!-- mini ventana que se centra en el cuerpo -->
+			<div id="container_data">
+				
+				<!-- sección izquierda para la imagen -->
+				<div id="imagen">	
+					<img src="img/system/login.svg" alt="">
+				</div>
+			
+				<!-- Seccion derecha para la explicación -->
+				<div id="description">
+					<h1>Iniciar sesión</h1>
+					<form action="" method="POST">
+
+						<div class="error_form">{{MSG_ERROR_FORM}}</div>
+						
+						<input type="email" placeholder="email" name="txt_email" required>
+						<input type="password" placeholder="password" name="txt_pass" required>
+						<input type="submit" name="btn_ingresar" value="ingresar">
+
+					</form>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
 
 </body>
 </html>

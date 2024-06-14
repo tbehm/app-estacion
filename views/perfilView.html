@@ -18,15 +18,15 @@
 			
 			<!-- Seccion para colocar el logo -->
 			<div id="hero">
-				<img src="img/system/hero.png" alt="">
+				<a href="?slug=landing">
+					<img src="img/system/hero.png" alt="">
+				</a>
 			</div>
 
 			<!-- Sección para colocar los botones de login / register / cerrar sesión / menú -->
 			<div id="control">
-				
-				<a href="?slug=login" class="btn_login">Login</a>
-				<a href="?slug=register" class="btn_register">Register</a>
-
+			
+				<a href="?slug=logout" class="btn_login">Cerrar sesión</a>
 			</div>
 
 		</div>
@@ -40,13 +40,19 @@
 				
 				<!-- sección izquierda para la imagen -->
 				<div id="imagen">	
-					<img src="img/landing.svg" alt="">
+					<img src="img/system/panel.svg" alt="">
 				</div>
 			
 				<!-- Seccion derecha para la explicación -->
 				<div id="description">
-					<h1>Bienvenido a los apuntes X</h1>
-					<h2>Ya somos {{CANT_USUARIOS}} usuarios compartiendo {{CANT_APUNTES}} apuntes</h2>
+					<h1>Perfil</h1>
+
+
+					<div class="error_form">{{MSG_ERROR_FORM}}</div>
+						<input type="email" placeholder="email" name="txt_email" value="{{USER_NAME}}" required>
+
+						<input type="password" placeholder="password" name="txt_pass" required>
+						<input type="submit" name="btn_modificar" value="modificar">
 				</div>
 
 			</div>
