@@ -9,10 +9,6 @@
 	 * */
 	class User extends DBAbstract{
 
-		public $nombre;
-		public $email;
-		private $id;
-
 		/**
 		 * 
 		 * Constructor de la clase, ejecuta el constructor de DBAbstract
@@ -20,11 +16,39 @@
 		 * */
 		function __construct(){
 			parent::__construct();
+
+			$result = $this->consultar('DESCRIBE `losapuntes__usuarios`; ');
+
+			foreach ($result as $key => $value) {
+
+				$attrib = $value['Field']; 
+
+				$this->$attrib = "";
+			}
 		}
 
 		/**
 		 * 
-		 * loguea un usuario a la aplicacion
+		 * Actualiza los datos del usuario
+		 * @param array $form arreglo asociativo con los datos actualizar
+		 * @return array arreglo de errores
+		 * 
+		 * */
+		function update($form){
+			$this->nombre = $form["txt_nombre"];
+			$this->apellido = $form["txt_apellido"];
+
+			$sql = "UPDATE losapuntes__usuarios SET nombre = '{$this->nombre}', apellido = '{$this->apellido}' WHERE email='{$this->email}'";
+
+
+			$this->consultar($sql);
+
+			return ["error" => "Actualizacion exitosa", "errno" => 200];
+		}
+
+		/**
+		 * 
+		 * loguea un usuario a la aplicacion si existe y esta activo
 		 * 
 		 * @param array $form_login arreglo asociativo con txt_email y txt_pass
 		 * @return array arreglo asociativo error y errno
@@ -33,9 +57,10 @@
 		function login($form_login){
 
 			$email = $form_login["txt_email"];
+			// cifra la contraseña
 			$pass = md5($form_login["txt_pass"]);
 
-			$response = $this->consultar("SELECT * FROM losapuntes__usuarios WHERE email='$email'");
+			$response = $this->consultar("SELECT * FROM losapuntes__usuarios WHERE email='$email' AND delete_at = '0000-00-00 00:00:00'");
 
 			// no encontre el email
 			if(count($response)==0){
@@ -45,6 +70,7 @@
 			if($response[0]["pass"]==$pass){
 				$this->id = $response[0]["id"];
 				$this->nombre = $response[0]["nombre"];
+				$this->apellido = $response[0]["apellido"];
 				$this->email = $email;
 				
 				$_SESSION['losapuntes']['usuario'] = $this;
@@ -70,7 +96,7 @@
 
 			$response = $this->consultar("SELECT * FROM losapuntes__usuarios WHERE email='$email'");
 
-			var_dump($response);
+			//var_dump($response);
 
 			// no encontre el email entonces puedo registrarme
 			if(count($response)==0){
@@ -78,6 +104,25 @@
 				$this->consultar("INSERT INTO losapuntes__usuarios (email, pass) VALUES ('$email', '$pass')");
 
 				return ["error" => "Usuario registrado correctamente", "errno" => 200];
+			}else{ // Se encontro el email
+
+				// Si el usuario es uno que abandono la app
+				if($response[0]["delete_at"]!="0000-00-00 00:00:00"){
+
+					$id = $response[0]["id"];
+
+					$sql = "UPDATE losapuntes__usuarios SET delete_at = '0000-00-00 00:00:00' WHERE id=$id";
+
+					//var_dump($sql);
+
+					$this->consultar($sql);
+
+					return ["error" => "Usuario que abandono y volvio", "errno" => 202];
+
+				}else{ // el usuario solo esta registrado
+
+					return ["error" => "Usuario ya registrado", "errno" => 201];
+				}
 			}
 
 			return ["error" => "Usuario ya registrado", "errno" => 201];
@@ -107,6 +152,27 @@
 
 		}
 
+
+		/**
+		 * 
+		 * Soft Delete del usuario en la tabla de usuarios
+		 * @return bool true
+		 * 
+		 * */
+		function leaveOut(){
+
+			$fecha_hora = date("Y-m-d h:i:s");
+			$id = $this->id;
+
+			$sql = "UPDATE losapuntes__usuarios SET delete_at = '$fecha_hora' WHERE id=$id";
+
+			$this->consultar($sql);
+
+			$this->logout();
+
+			return true;
+		}
+
 		/**
 		 * 
 		 * Retorna la cantidad de usuarios
@@ -116,7 +182,7 @@
 		 * */
 		function getCantUser(){
 
-			$response = $this->consultar("SELECT * FROM losapuntes__usuarios");
+			$response = $this->consultar("SELECT * FROM losapuntes__usuarios WHERE delete_at = '0000-00-00 00:00:00'");
 
 			return $this->db->affected_rows;
 

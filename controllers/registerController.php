@@ -18,8 +18,8 @@
 		// intentamos registrarnos al usuario
 		$response = $usuario->register($formulario);
 
-		// registro valido
-		if($response["errno"]==200){
+		// registro valido o usuario que abandono y volvio
+		if($response["errno"]==200 || $response["errno"]==202){
 			// redirecciona al panel
 			header("Location: ?slug=login");
 		}

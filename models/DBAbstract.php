@@ -27,6 +27,16 @@
 		 * */
 		function __construct(){
 			
+			$this->conectar();
+
+		}
+
+		/**
+		 * 
+		 * Conecta con la base de datos
+		 * 
+		 * */
+		function conectar(){
 			$this->db = @new mysqli(HOST, USER, PASS, DB);	
 		
 			if($this->db->connect_errno){
@@ -34,7 +44,6 @@
 
 				exit();
 			}
-
 		}
 
 		/**
@@ -46,6 +55,9 @@
 		 * 
 		 * */
 		function consultar($sql){
+
+			$this->conectar();
+			
 			$response = $this->db->query($sql);
 
 			if($this->db->errno){
@@ -53,17 +65,19 @@
 				exit();
 			}
 			
-			/*
-			= asignacion
-			== comparacion de contenido
-			=== comparacion de contenido y tipo de variable
-			*/
+			// obtiene la primer palabra de la query
+			$first_word = strstr($sql, " ", true);	
 
-			// Deteccion del tipo de consulta DML para que retorne MATRIZ o BOOL
-			if(strpos($sql, "SELECT")===false){
-				return true;
-			}else{
-				return $response->fetch_all(MYSQLI_ASSOC);
+			switch ($first_word) {
+				case 'DESCRIBE':
+				case 'SELECT':
+
+					return $response->fetch_all(MYSQLI_ASSOC);
+					break;
+				
+				default:
+					return true;
+					break;
 			}
 		}
 

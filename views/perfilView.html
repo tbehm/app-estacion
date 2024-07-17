@@ -5,10 +5,38 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
 
-	<link rel="stylesheet" type="text/css" href="views/static/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="views/static/css/styles.css?seed=1010101919">
 
 </head>
 <body>
+
+	<div id="mist">
+		
+		<div id="windown">
+			
+			<div id="window__control">
+				<div id="window__close">
+					X
+				</div>
+			</div>
+
+			<div id="window__content">
+				Esta seguro que desea abandonar la super app
+			</div>
+
+			<div id="window__buttons">
+				
+				<a href="?slug=abandonar">
+					<div id="window__accept" class="btn__accept">Aceptar</div>
+				</a>
+
+				<div id="window__cancel" class="btn__cancel">Cancel</div>
+
+			</div>
+
+		</div>
+
+	</div>
 
 	<!-- Envoltura de todo el contenido -->
 	<div id="wrapper">
@@ -49,10 +77,21 @@
 
 
 					<div class="error_form">{{MSG_ERROR_FORM}}</div>
-						<input type="email" placeholder="email" name="txt_email" value="{{USER_NAME}}" required>
 
-						<input type="password" placeholder="password" name="txt_pass" required>
-						<input type="submit" name="btn_modificar" value="modificar">
+						<form action="" method="POST">
+
+							<input type="text" placeholder="nombre" name="txt_nombre" value="{{USER_FIRST_NAME}}" required>
+
+							<input type="text" placeholder="apellido" name="txt_apellido" value="{{USER_LAST_NAME}}" required>
+
+							<input type="submit" name="btn_modificar" value="modificar">
+						</form>
+
+
+						<button id="btn__leaveout">Abandonar</button>
+
+
+
 				</div>
 
 			</div>
@@ -60,6 +99,34 @@
 		</div>
 
 	</div>
+
+
+	<script type="text/javascript">
+
+
+		btn__leaveout.addEventListener("click", e =>{
+
+			windowVisible();
+
+		})
+
+		window__close.addEventListener("click", e => {
+			windowsHidden();
+		})
+
+		window__cancel.addEventListener("click", e => {
+			windowsHidden();
+		})
+
+		function windowVisible(){
+			mist.style.display = "flex" 	
+		}
+		
+		function windowsHidden(){
+			mist.style.display = "none"
+		} 
+
+	</script>
 
 </body>
 </html>

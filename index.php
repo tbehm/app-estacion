@@ -26,7 +26,7 @@
 	}
 
 	// si esta logueado controladores permitidos
-	$controller_user_connected = ["panel", "perfil", "logout"];
+	$controller_user_connected = ["panel", "perfil", "logout", "abandonar"];
 	// no esta logueado controladores permitidos
 	$controller_user_anonymous = ["landing", "login", "register"];
 

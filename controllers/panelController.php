@@ -4,7 +4,7 @@
 	$usuario = $_SESSION['losapuntes']["usuario"];
 
 	// variables a reemplazar dentro de la vista
-	$vars = ["USER_NAME" => $usuario->nombre, "USER_ID" => $usuario->getId()];
+	$vars = ["USER_NAME" => $usuario->nombre, "USER_LAST_NAME" => $usuario->apellido];
 
 	// carga la vista
 	$tpl = new Tini("panel");

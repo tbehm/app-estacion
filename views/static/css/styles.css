@@ -26,16 +26,16 @@
 	text-decoration:none;
 	text-shadow:0px 1px 0px #854629;
 }
+
 .btn_register:hover {
 	background:linear-gradient(to bottom, #bc3315 5%, #d0451b 100%);
 	background-color:#bc3315;
 }
+
 .btn_register:active {
 	position:relative;
 	top:1px;
 }
-
-
 
 .btn_login {
 	box-shadow: 0px 1px 0px 0px #fff6af;
@@ -62,8 +62,6 @@
 	top:1px;
 }
 
-       
-
 body{
 	background-color: var(--bg-color);
 }
@@ -75,7 +73,6 @@ body{
 	padding: 1rem;
 	/*! gap: 1rem; */
 }
-
 
 #control {
 	display: flex;
@@ -92,7 +89,6 @@ body{
 	align-items: center;
 }
 
-
 #container_data {
   width: 600px;
   background-color: var(--bg-color-container);
@@ -100,7 +96,6 @@ body{
   padding: 2rem;
   gap: 1rem;
 }
-	
 	
 /*16 de tamaño de fuente = 1 REM */
 
@@ -110,4 +105,98 @@ body{
 	
 #container img {
   width: 300px;
+}
+
+#mist {
+  width: 100%;
+  height: 100%;
+  background-color: #000000a3;
+  z-index: 1;
+  position: absolute;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+#windown {
+  width: 300px;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#window__control {
+  background-color: var(--bg-color);
+  display: flex;
+  justify-content: right;
+  padding: 0.1rem;
+}
+
+#window__close {
+  color: white;
+  background-color: red;
+  padding: 0.5rem;
+  font-weight: bold;
+  border-radius: 8px;
+  user-select: none;
+}
+
+#window__content {
+  padding: 1rem;
+  text-align: center;
+}
+
+#window__buttons {
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem;
+}
+
+.btn__accept {
+	background-color:#44c767;
+	border-radius:28px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:16px 31px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+}
+
+.btn__accept:hover {
+	background-color:#5cbf2a;
+}
+
+.btn__accept:active {
+	position:relative;
+	top:1px;
+}
+
+.btn__cancel {
+	box-shadow: 3px 4px 0px 0px #8a2a21;
+	background:linear-gradient(to bottom, #c62d1f 5%, #f24437 100%);
+	background-color:#c62d1f;
+	border-radius:18px;
+	border:1px solid #d02718;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:7px 25px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #810e05;
+}
+
+.btn__cancel:hover {
+	background:linear-gradient(to bottom, #f24437 5%, #c62d1f 100%);
+	background-color:#f24437;
+}
+
+.btn__cancel:active {
+	position:relative;
+	top:1px;
 }
