@@ -4,5 +4,5 @@
 	$_SESSION['losapuntes']["usuario"]->logout();
 
 	// Redirecciona a la landing page
-	header("Location: ?slug=landing");
+	header("Location: landing");
  ?>

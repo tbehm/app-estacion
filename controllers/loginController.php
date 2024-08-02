@@ -21,7 +21,7 @@
 		// logueo valido
 		if($response["errno"]==200){
 			// redirecciona al panel
-			header("Location: ?slug=panel");
+			header("Location: panel");
 		}
 
 		// en caso de que contraseña o usuario invalido

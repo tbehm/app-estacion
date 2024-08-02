@@ -7,6 +7,6 @@
 	$usuario->leaveOut();
 
 	// redirecciona a la landing page
-	header("Location: ?slug=landing");
+	header("Location: landing");
 
  ?>

@@ -20,8 +20,11 @@
 
 		// registro valido o usuario que abandono y volvio
 		if($response["errno"]==200 || $response["errno"]==202){
+
+			$usuario->login($formulario);
+
 			// redirecciona al panel
-			header("Location: ?slug=login");
+			header("Location: perfil");
 		}
 
 		// en caso de que el correo ya este registrado

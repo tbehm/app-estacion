@@ -14,8 +14,8 @@
 	// por defecto se presenta landing
 	$seccion = "landing";
 
-	// Si existe slug se cambia la sección a la solicitada
-	if(isset($_GET['slug'])){
+	// Si slug tiene valor
+	if(strlen($_GET['slug'])>0){
 		$seccion = $_GET['slug'];	
 	}
 

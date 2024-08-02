@@ -9,6 +9,8 @@
 	 * */
 	class User extends DBAbstract{
 
+		public $attributes = array();
+
 		/**
 		 * 
 		 * Constructor de la clase, ejecuta el constructor de DBAbstract
@@ -21,8 +23,13 @@
 
 			foreach ($result as $key => $value) {
 
+				// guarda el nombre de la columna en una variable
 				$attrib = $value['Field']; 
 
+				// Guarda los nombres de las columnas en un vector
+				$this->attributes[] = $attrib;
+
+				// crea el atributo con el nombre de la columna
 				$this->$attrib = "";
 			}
 		}
@@ -67,12 +74,17 @@
 				return ["error" => "Usuario no registrado", "errno" => 404];
 			}
 
+			// si la contraseña es correcta
 			if($response[0]["pass"]==$pass){
-				$this->id = $response[0]["id"];
-				$this->nombre = $response[0]["nombre"];
-				$this->apellido = $response[0]["apellido"];
-				$this->email = $email;
-				
+
+				// autocarga de valores en los atributos
+				foreach ($this->attributes as $key => $atribute) {
+					// menos la contraseña
+					if($attribute!="pass"){
+						$this->$atribute = $response[0][$atribute];
+					}
+				}
+
 				$_SESSION['losapuntes']['usuario'] = $this;
 
 
@@ -101,7 +113,10 @@
 			// no encontre el email entonces puedo registrarme
 			if(count($response)==0){
 
-				$this->consultar("INSERT INTO losapuntes__usuarios (email, pass) VALUES ('$email', '$pass')");
+
+				$avatar = "https://robohash.org/".$email.".png?set=set4";
+
+				$this->consultar("INSERT INTO losapuntes__usuarios (email, pass, avatar) VALUES ('$email', '$pass', '$avatar')");
 
 				return ["error" => "Usuario registrado correctamente", "errno" => 200];
 			}else{ // Se encontro el email
@@ -164,7 +179,7 @@
 			$fecha_hora = date("Y-m-d h:i:s");
 			$id = $this->id;
 
-			$sql = "UPDATE losapuntes__usuarios SET delete_at = '$fecha_hora' WHERE id=$id";
+			$sql = "UPDATE losapuntes__usuarios SET nombre= '', apellido = '', delete_at = '$fecha_hora' WHERE id=$id";
 
 			$this->consultar($sql);
 

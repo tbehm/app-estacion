@@ -4,7 +4,7 @@
 	$usuario = $_SESSION['losapuntes']["usuario"];
 
 	// variables a reemplazar dentro de la vista
-	$vars = ["MSG_ERROR_FORM" => "", "USER_LAST_NAME" => $usuario->apellido, "USER_FIRST_NAME" => $usuario->nombre];
+	$vars = ["MSG_ERROR_FORM" => "", "USER_LAST_NAME" => $usuario->apellido, "USER_FIRST_NAME" => $usuario->nombre, "AVATAR" => $usuario->avatar];
 
 
 
@@ -23,7 +23,7 @@
 		// registro valido
 		if($response["errno"]==200){
 			// redirecciona al panel
-			header("Location: ?slug=panel");
+			header("Location: panel");
 		}
 
 		// en caso de que el correo ya este registrado
