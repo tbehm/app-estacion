@@ -1,5 +1,14 @@
 <?php 
 	
+	/**
+	* @file User.php
+	* @brief Declaraciones de la clase User para la conexión con la base de datos.
+	* @author Matias Leonardo Baez
+	* @date 2024
+	* @contact elmattprofe@gmail.com
+	*/
+
+	// incluye la libreria para conectar con la db
 	include_once 'DBAbstract.php';
 
 	/**
@@ -45,7 +54,7 @@
 			$this->nombre = $form["txt_nombre"];
 			$this->apellido = $form["txt_apellido"];
 
-			$sql = "UPDATE losapuntes__usuarios SET nombre = '{$this->nombre}', apellido = '{$this->apellido}' WHERE email='{$this->email}'";
+			$sql = "CALL updateUser('{$this->nombre}', '{$this->apellido}', '{$this->email}')";
 
 
 			$this->consultar($sql);
@@ -63,11 +72,17 @@
 		 * */
 		function login($form_login){
 
+			if($_SERVER["REQUEST_METHOD"]!="GET"){
+				return ["errno" => 405, "error" => "Metodo incorrecto"];
+			}
+
 			$email = $form_login["txt_email"];
 			// cifra la contraseña
 			$pass = md5($form_login["txt_pass"]);
 
-			$response = $this->consultar("SELECT * FROM losapuntes__usuarios WHERE email='$email' AND delete_at = '0000-00-00 00:00:00'");
+			$response = $this->consultar("CALL `login`('$email')");
+
+			$response = $response->fetch_all(MYSQLI_ASSOC);
 
 			// no encontre el email
 			if(count($response)==0){
@@ -78,17 +93,16 @@
 			if($response[0]["pass"]==$pass){
 
 				// autocarga de valores en los atributos
-				foreach ($this->attributes as $key => $atribute) {
+				foreach ($this->attributes as $key => $attribute) {
 					// menos la contraseña
 					if($attribute!="pass"){
-						$this->$atribute = $response[0][$atribute];
+						$this->$attribute = $response[0][$attribute];
 					}
 				}
 
 				$_SESSION['losapuntes']['usuario'] = $this;
 
-
-				return ["error" => "", "errno" => 200];
+				return ["error" => "Logueo valido", "errno" => 200];
 			}
 
 			return ["error" => "Contraseña invalida", "errno" => 405];
@@ -108,6 +122,7 @@
 
 			$response = $this->consultar("SELECT * FROM losapuntes__usuarios WHERE email='$email'");
 
+			$response = $response->fetch_all(MYSQLI_ASSOC);
 			//var_dump($response);
 
 			// no encontre el email entonces puedo registrarme
@@ -116,7 +131,7 @@
 
 				$avatar = "https://robohash.org/".$email.".png?set=set4";
 
-				$this->consultar("INSERT INTO losapuntes__usuarios (email, pass, avatar) VALUES ('$email', '$pass', '$avatar')");
+				$this->consultar("CALL userRegister('$email', '$pass', '$avatar')");
 
 				return ["error" => "Usuario registrado correctamente", "errno" => 200];
 			}else{ // Se encontro el email
@@ -126,7 +141,7 @@
 
 					$id = $response[0]["id"];
 
-					$sql = "UPDATE losapuntes__usuarios SET delete_at = '0000-00-00 00:00:00' WHERE id=$id";
+					$sql = "CALL userComeBack($id)";
 
 					//var_dump($sql);
 
@@ -197,7 +212,7 @@
 		 * */
 		function getCantUser(){
 
-			$response = $this->consultar("SELECT * FROM losapuntes__usuarios WHERE delete_at = '0000-00-00 00:00:00'");
+			$response = $this->consultar("CALL `getCantUser`();");
 
 			return $this->db->affected_rows;
 
@@ -215,6 +230,29 @@
 			$response = $this->consultar("SELECT * FROM losapuntes__usuarios WHERE id='$id'");
 
 			return $response;
+		}
+
+		/**
+		 * 
+		 * @brief Lista de usuarios limitada GET
+		 * @param array $params [inicio]int [cantidad]int
+		 * @return array listado de usuarios
+		 *
+		 * */
+		function getAll($params){
+
+			if($_SERVER["REQUEST_METHOD"]!="GET"){
+				return ["errno" => 405, "error" => "Metodo incorrecto"];
+			}
+
+			$inicio = $params["inicio"];
+			$cantidad = $params["cantidad"];
+
+			$result = $this->consultar("SELECT * FROM losapuntes__usuarios LIMIT  $inicio,$cantidad")->fetch_all(MYSQLI_ASSOC);
+
+			$result = ["errno" => 200, "error" => "Listado correctamente", "info" => $result];
+
+			return $result;
 		}
 	}
 

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>LosApuntes - Listado</title>
+
+	<link rel="stylesheet" type="text/css" href="views/static/css/styles.css">
+
+</head>
+<body>
+
+	<!-- Envoltura de todo el contenido -->
+	<div id="wrapper">
+
+		<!-- Encabezado -->
+		<div id="header">
+			
+			<!-- Seccion para colocar el logo -->
+			<div id="hero">
+				<a href="landing">
+					<img src="img/system/hero.png" alt="">
+				</a>
+			</div>
+
+			<!-- Sección para colocar los botones de login / register / cerrar sesión / menú -->
+			<div id="control">
+			
+			
+
+			</div>
+
+		</div>
+		<!-- Fin encabezado -->
+		
+		<!-- Contenedor de datos (cuerpo) -->
+		<div id="container">
+
+			<!-- mini ventana que se centra en el cuerpo -->
+			<div id="container_data">
+		
+				<!-- Seccion derecha para la explicación -->
+				<div id="description">
+					<h1>Listado:</h1>
+
+
+					<!-- BEGIN: Plantilla para clonar una fila -->
+					<template id="tpl_row">
+						<div class="row">
+							<div class="column avatar">
+								<img src="" alt="" width="20%" class="avatar_img">
+							</div>
+							<div class="column nombre">nombre</div>
+							<div class="column apellido">apellido</div>
+						</div>
+					</template>
+					<!-- END: Plantilla para clonar una fila -->
+
+					<!-- Listado de usuarios -->
+					<div id="stream_listado"></div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<script type="text/javascript">
+
+		// Llamada a la función asincrona que obtiene un listado de usuarios
+		getAllUsers(0,10).then( data => {
+
+			/*< Si el listado es correcto*/
+			if(data.errno == 200){
+
+				// Recorre el listado de usuarios fila por fila
+				data.info.forEach( row => {
+
+					// Crea e inserta una fila dentro de stream__listado
+					addRowListado(row);
+
+				})
+			}
+
+		} )
+
+		/**
+	 	 * 
+	 	 * @brief Agrega una fila dentro de stream__listado
+	 	 * @param object data fila con datos de usuario
+	 	 * 
+	 	 * */
+		function addRowListado(data){
+
+			/*< captura el contenido de la template */
+			const tpl = tpl_row.content;
+			/*< clona la plantilla como un nodo completo*/
+			const clon = tpl.cloneNode(true);
+
+			/*< alteramos el contenido del clon con los valores de data */
+			clon.querySelector(".avatar_img").src = data.avatar;
+			clon.querySelector(".nombre").innerHTML = data.nombre;
+			clon.querySelector(".apellido").innerHTML = data.apellido;
+
+			/*< inserta el clon modificado dentro de stream__listado */
+			stream_listado.appendChild(clon);
+		}
+
+
+		/**
+	 	 * 
+	 	 * @brief Retorna un listado de usuarios en formato JSON
+	 	 * @param int inicio desde que fila inicia.
+	 	 * @param int cantidad cantidad de filas a listar
+	 	 * @return json listado de usuarios
+	 	 * 
+	 	 * */
+		async function getAllUsers(inicio, cantidad){
+			/*< consulta a la API */
+			const response = await fetch("api/user/getAll/?inicio="+inicio+"&cantidad="+cantidad);
+			/*< convierte la respuesta a formato json */
+			const data = await response.json();
+
+			return data;
+
+		}
+	</script>
+
+</body>
+</html>

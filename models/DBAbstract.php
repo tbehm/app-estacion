@@ -65,20 +65,7 @@
 				exit();
 			}
 			
-			// obtiene la primer palabra de la query
-			$first_word = strstr($sql, " ", true);	
-
-			switch ($first_word) {
-				case 'DESCRIBE':
-				case 'SELECT':
-
-					return $response->fetch_all(MYSQLI_ASSOC);
-					break;
-				
-				default:
-					return true;
-					break;
-			}
+			return $response;
 		}
 
 	}
