@@ -1,63 +1,33 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>LosApuntes - Panel</title>
+@extern('header')
+	<link rel="stylesheet" type="text/css" href="views/static/css/panel.css">
+				<div id="estacion-titulo"><h1>Estaciones</h1></div>
 
-	<link rel="stylesheet" type="text/css" href="views/static/css/styles.css">
+		<div id="estaciones">
+		</div>
 
-</head>
-<body>
+		<template id="tpl-btn-estacion">
+			<div class="estacion">
+				
+				<a href="" class="btn-estacion">
+					<h3><div class="estacion-nombre">
+						
+					</div></h3>
 
-	<!-- Envoltura de todo el contenido -->
-	<div id="wrapper">
+					<div class="estacion-ubicacion">
+						
+					</div>
 
-		<!-- Encabezado -->
-		<div id="header">
-			
-			<!-- Seccion para colocar el logo -->
-			<div id="hero">
-				<a href="landing">
-					<img src="img/system/hero.png" alt="">
+					<div class="estacion-visitas">
+						
+					</div>
 				</a>
 			</div>
 
-			<!-- Sección para colocar los botones de login / register / cerrar sesión / menú -->
-			<div id="control">
-			
-				<a href="perfil" class="btn_login">Perfil</a>
+		</template>
 
-				<a href="logout" class="btn_login">Cerrar sesión</a>
-
-			</div>
-
-		</div>
-		<!-- Fin encabezado -->
 		
-		<!-- Contenedor de datos (cuerpo) -->
-		<div id="container">
+	
 
-			<!-- mini ventana que se centra en el cuerpo -->
-			<div id="container_data">
-				
-				<!-- sección izquierda para la imagen -->
-				<div id="imagen">	
-					<img src="img/system/panel.svg" alt="">
-				</div>
-			
-				<!-- Seccion derecha para la explicación -->
-				<div id="description">
-					<h1>Bienvenido:</h1>
-					<div id="user_name">{{USER_NAME}}</div>
-					<div id="user_last_name">{{USER_LAST_NAME}}</div>
-				</div>
+	<script type="text/javascript" src="views/static/javascript/estaciones.js"></script>
 
-			</div>
-
-		</div>
-
-	</div>
-
-</body>
-</html>
+	
